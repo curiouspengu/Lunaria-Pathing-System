@@ -2,6 +2,11 @@
 Lunaria Pathing System (LPS) is used to create paths for Radiance Macro.
 Only supports keyboard at this point.
 
+# Requirements:
+- Python
+- multiprocessing
+- pynput
+
 # Instructions:
 - Run record_path.py to record a path
 - Press F1 to start recording
