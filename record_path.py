@@ -1,5 +1,4 @@
 import sys
-import multiprocessing
 from time import sleep, time
 from pynput.keyboard import Key, Listener
 

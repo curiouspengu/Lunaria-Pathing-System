@@ -4,8 +4,8 @@ Only supports keyboard at this point.
 
 # Requirements:
 - Python
-- multiprocessing
 - pynput
+- win32gui
 
 # Instructions:
 - Run record_path.py to record a path
