@@ -28,11 +28,12 @@ def on_press(key):
         return False
     if key == Key.f1 and running == False:
         running = True
+        last_event = time()
         file.write(f"\n# New Recording\n")
         print("Started Recording")
     elif running == True and key_press_dict[str(key)] == False:
         print(key)
-        file.write(f"walk_sleep('{time()-last_event}')\n")
+        file.write(f"walk_sleep('{round(time()-last_event, 3)}')\n")
         last_event = time()
         key_press_dict[str(key)] = True
         file.write(f"walk_send({str(key).replace("Key.space", "'space'")}, 'Down')\n")
@@ -41,7 +42,7 @@ def on_release(key):
     global last_event
     global file
     if running == True and not key == Key.f1:
-        file.write(f"walk_sleep('{time()-last_event}')\n")
+        file.write(f"walk_sleep('{round(time()-last_event, 3)}')\n")
         last_event = time()
         file.write(f"walk_send({str(key).replace("Key.space", "'space'")}, 'Up')\n")
     
