@@ -41,6 +41,7 @@ def on_release(key):
     global last_event
     global file
     if running == True and not key == Key.f1:
+        key_press_dict[str(key)] = False
         file.write(f"walk_sleep('{round(time()-last_event, 3)}')\n")
         last_event = time()
         file.write(f"walk_send({str(key).replace("Key.space", "'space'")}, 'Up')\n")
