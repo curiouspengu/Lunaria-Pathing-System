@@ -5,7 +5,8 @@ Only supports keyboard at this point.
 # Requirements:
 - Python
 - pynput
-- win32gui
+- ahk
+- pywin32
 
 # Instructions:
 - Run record_path.py to record a path
