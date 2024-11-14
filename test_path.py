@@ -4,5 +4,5 @@ from settings import *
 
 focus_roblox()
 print("started")
-exec(open("paths.py"))
+# PASTE PATH HERE
 print("finished")
