@@ -35,7 +35,7 @@ def on_press(key):
         file.write(f"walk_sleep('{round(time()-last_event, 3)}')\n")
         last_event = time()
         key_press_dict[str(key)] = True
-        file.write(f"walk_send({str(key).replace("Key.space", "'space'")}, 'Down')\n")
+        file.write(f'walk_send({str(key).replace("Key.space", "'space'")}, "Down")\n')
 
 def on_release(key):
     global last_event
@@ -44,7 +44,7 @@ def on_release(key):
         key_press_dict[str(key)] = False
         file.write(f"walk_sleep('{round(time()-last_event, 3)}')\n")
         last_event = time()
-        file.write(f"walk_send({str(key).replace("Key.space", "'space'")}, 'Up')\n")
+        file.write(f'walk_send({str(key).replace("Key.space", "'space'")}, "Up")\n')
     
         
 def main():
