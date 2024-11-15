@@ -6,6 +6,7 @@ Only supports keyboard at this point.
 - Python
 - pynput
 - ahk
+- pathlib
 - pywin32
 
 # Instructions:

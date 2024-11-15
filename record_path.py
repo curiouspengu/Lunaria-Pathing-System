@@ -1,13 +1,14 @@
 import sys
 from time import sleep, time
 from pynput.keyboard import Key, Listener
+import pathlib
 
 sys.dont_write_bytecode = True
 
 last_event = 0
 running = False
 
-file = open("path.py", "a")
+file = open(f"{str(pathlib.Path(__file__).parent.resolve())}path.py", "a")
 key_press_dict = {
     "'w'": False,
     "'a'": False,
