@@ -1,5 +1,6 @@
 # Settings
-developer_walk_speed = 1 # Set to 0.8 or 1.25 if path runner has different vip seeting to you 
+developer_walk_speed = 1.25
+player_walk_speed = 1 # vip or not
 
 
 
@@ -57,7 +58,7 @@ azerty_replace_dict = {"w":"z", "a":"q"}
 ahk = AHK()
 
 def walk_time_conversion(d):
-    final_walk_time = float(d) * developer_walk_speed
+    final_walk_time = float(d) * (1.0 + (developer_walk_speed - 1.0) * (1 - player_walk_speed))
     return final_walk_time
 
 def walk_sleep(d):
