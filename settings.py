@@ -1,5 +1,5 @@
 # Settings
-developer_walk_speed = 1.25 # Path Maker Walk Speed (Can be zero or 1)
+developer_walk_speed = 1 # Set to 0.8 or 1.25 if path runner has different vip seeting to you 
 
 
 
