@@ -51,7 +51,7 @@ def on_release(key):
             key_press_dict[str(key)] = False
             file.write(f"walk_sleep('{round(time()-last_event, 3)}')\n")
             last_event = time()
-            file.write(f'walk_send({str(key).replace("Key.space", "space")}, "Up")\n')
+            file.write(f'walk_send("{str(key).replace("Key.space", "space")}", "Up")\n')
     except:
         pass
     
