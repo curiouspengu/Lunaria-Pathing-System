@@ -23,6 +23,7 @@ def on_press(key):
     global last_event
     global file
     global running
+    global key_press_dict
 
     try:
         if key == Key.f2:
@@ -42,6 +43,7 @@ def on_press(key):
         pass
 
 def on_release(key):
+    global key_press_dict
     global last_event
     global file
     try:
