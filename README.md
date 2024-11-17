@@ -11,6 +11,7 @@ Only supports keyboard at this point.
 
 # Instructions:
 - Run record_path.py to record a path
+- F5 aligns camera (no reset)
 - Press F1 to start recording
 - Press F2 to stop recording
 - Paste path in test_path.py
