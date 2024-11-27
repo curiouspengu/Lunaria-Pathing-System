@@ -31,3 +31,5 @@ Only supports keyboard at this point.
 
 ### Graphical Designer
 - Cate
+
+Lunaria Pathing System © 2024 by Radiant Team is licensed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International 
