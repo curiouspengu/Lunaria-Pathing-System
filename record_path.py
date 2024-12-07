@@ -1,106 +1,124 @@
-import sys
-from time import sleep, time
-from pynput.keyboard import Key, Listener
-import pathlib
-import window   
+filename = "path.py"
 
+
+
+
+
+
+
+
+import time
+from auto import *
+from threading import Thread
+from pynput import mouse, keyboard
 from ahk import AHK
-sys.dont_write_bytecode = True
-
-last_event = 0
-running = False
-
-file = open(f"{str(pathlib.Path(__file__).parent.resolve())}/path.py", "a")
-key_press_dict = {
-    "'w'": False,
-    "'a'": False,
-    "'s'": False,
-    "'d'": False,
-    "'e'": False,
-    "'f'": False,
-    "Key.space": False,
-}
 
 ahk = AHK()
-
-
-def align_camera():
-    window.focus_roblox()
-    window.get_roblox_window_pos(rx:=[], ry:=[], rw:=[], rh:=[])
-    click_menu_button(2)
-    sleep(0.1)
-    ahk.mouse_move(381 * (rw[0]/1920), 129 * (rh[0]/1080))
-    ahk.click()
-    sleep(0.1)
-    ahk.mouse_drag(button="R", from_position=[rx[0] + rw[0]*0.2, ry[0] + 44 + rh[0]*0.05], x=rx[0] + rw[0]*0.2, y=ry[0] + 400 + rh[0]*0.05, send_mode="Input", speed=1)
-    sleep(0.1)
-    for i in range(50):
-        ahk.click(button="WU")
-        sleep(0.01)
-    for i in range(15):
-        ahk.click(button="WD")
-        sleep(0.01)
-
-ahk.add_hotkey("F5", align_camera)
-
-def on_press(key):
-    global last_event
-    global file
-    global running
-    global key_press_dict
-
-    try:
-        if key == Key.f2:
-            return False
-        if key == Key.f1 and running == False:
-            running = True
-            last_event = time()
-            file.write(f"\n# New Recording\n")
-            print("Started Recording")
-
-        elif running == True and key_press_dict[str(key)] == False:
-            print(key)
-            file.write(f"walk_sleep('{round(time()-last_event, 3)}')\n")
-            last_event = time()
-            key_press_dict[str(key)] = True
-            file.write(f'walk_send({str(key).replace("Key.space", "space")}, "Down")\n')
-    except:
-        pass
-
-def on_release(key):
-    global key_press_dict
-    global last_event
-    global file
-    try:
-        if running == True and not key == Key.f1:
-            key_press_dict[str(key)] = False
-            file.write(f"walk_sleep('{round(time()-last_event, 3)}')\n")
-            last_event = time()
-            file.write(f'walk_send("{str(key).replace("Key.space", "space")}", "Up")\n')
-    except:
-        pass
-
+class Path():
+    def __init__(self, filename=filename):
+        self.azerty_keyboard = False
+        self.filename = filename
         
+        self.start_time = None
+        self.last_action = None
+
+        self.stop_recording_flag = False
+        self.stop_replay_flag = False
+
+        self.actions = []
+
+        self.mouse_controller = mouse.Controller()
+        self.keyboard_controller = keyboard.Controller()
+    
+    def start_recording(self):
+        self.recording = True
+        self.start_time = None
+        self.actions = []
+        self.stop_recording_flag = False
+
+        self.actions.append("\n\n# New Recording\n")
+
+        with mouse.Listener(on_click=self.on_click) as mouse_listener, \
+            keyboard.Listener(on_press=self.on_press, on_release=self.on_release) as keyboard_listener:
+            
+            while not self.stop_recording_flag: time.sleep(0.1)
+
+            mouse_listener.stop()
+            keyboard_listener.stop()
+        
+        self.recording = False
+        self.actions[1] == ""
+        self.save_recording()
+
+    def on_click(self, x, y, button, pressed):
+        self.record_mouse(x, y, button, pressed)
+
+    def on_press(self, key):
+        if key == keyboard.Key.f2:
+            self.stop_recording_flag = True
+        self.record_keyboard(key, True)
+
+    def on_release(self, key):
+        self.record_keyboard(key, False)
+    
+    def record_mouse(self, x, y, button, pressed):
+        if not self.stop_recording_flag:
+            if not self.start_time:
+                self.start_time = time.time()
+            if not self.last_action:
+                self.last_action = self.start_time
+            
+            timestamp = time.time() - self.last_action
+            self.last_action = time.time()
+            self.actions.append(f"sleep({timestamp})\nahk.click()\n")
+    
+    def record_keyboard(self, key, pressed):
+        if not self.stop_recording_flag:
+            if not self.start_time:
+                self.start_time = time.time()
+            if not self.last_action:
+                self.last_action = self.start_time
+            
+            key = self.convert_key_layout(str(key).replace("'", ""))
+            timestamp = time.time() - self.last_action
+            self.last_action = time.time()
+            key = f'\"{key}\"' if "Key" not in key else key
+            self.actions.append(f"walk_sleep({timestamp})\nwalk_send({key}, {pressed})\n")
+    
+    def convert_key_layout(self, key):
+        if self.azerty_keyboard:
+            azerty_map = {
+                'a': 'q', 'q': 'a',
+                'w': 'z', 'z': 'w',
+                's': 's', 'd': 'd'
+            }
+            return azerty_map.get(key, key)
+        return key
+
+    def save_recording(self):
+        with open(self.filename, "a") as f:
+            for action in self.actions:
+                f.write(action)
+        print(f"Actions saved to {self.filename}")
+    
+    def stop_recording(self):
+        self.stop_recording_flag = True
+
 def main():
-    print("F1 Start, F2 Stop")
-    with Listener(on_press=on_press, on_release=on_release) as listener:
-        listener.join()
-    global file
-    file.close()
+    print("F1 Start Recording | F2 Stop Recording | F3 Align Roblox Character | Ctrl C exit this window")
+    print("Run path.py to test | F1 Exit Path")
+    record_path = Path()
+    def on_record_hotkey():
+        print("Recording with hotkey")
+        Thread(target=record_path.start_recording).start()
 
-def click_menu_button(button_num):
-    window.get_roblox_window_pos(rx:=[], ry:=[], w:=[], h:=[])
-    menu_button_spacing = 54 * (h[0]/1080)
-    menu_button_width = 64 * (w[0]/1920)
-
-    start_x = 354 * (h[0]/1080)
-    start_y = 11 * (w[0]/1920)
-
-    ahk.mouse_move(x = start_y + (int(menu_button_width/2)), y = start_x + (menu_button_spacing * button_num))
-    ahk.click()
-
-ahk.start_hotkeys()
+    with keyboard.GlobalHotKeys({
+        '<F1>': on_record_hotkey,
+        '<F2>': record_path.stop_recording,
+        '<F3>': align_camera,
+        '<ctrl>+c': exit
+    }) as h:
+        h.join()
 
 if __name__ == "__main__":
     main()
-
