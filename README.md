@@ -20,7 +20,7 @@ Only supports keyboard at this point.
 
 # Radiant Team
 ### Owners
-- **Curious Pengu** (Founder of Lunaria Pathing System) | _Pathing Development, Radiance Macro Development_
+- **Curious Pengu** (Founder of Lunaria Pathing System) | _Pathing Development, Radiance Macro Development, Genesis Stat Tracker_
 - **steveonly1** | _Radiance Macro Development_
 - **noteab** | _dSIM Development_
 ### Developers
