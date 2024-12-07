@@ -19,13 +19,13 @@ Supports both keyboard and mouse
 
 # Radiant Team
 ### Owners
-- Curious Pengu (Pathing Development, Radiance Macro Development)
-- steveonly1 (Radiance Macro Development)
-- noteab (dSIM Development)
+- **Curious Pengu** (Founder of Lunaria Pathing System) | _Pathing Development, Radiance Macro Development, Genesis Stat Tracker_
+- **steveonly1** | _Radiance Macro Development_
+- **noteab** | _dSIM Development_
 ### Developers
-- TheEndyy (Roll detection)
-- Niko (Pathing)
-- bored man
-
+- **TheEndyy** | _Roll detection_
+- **bored man**
 ### Graphical Designer
-- Cate
+- **Cate**
+
+Lunaria Pathing System © 2024 by Radiant Team is licensed under Creative Commons Attribution-ShareAlike 4.0 International 
