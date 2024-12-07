@@ -1,9 +1,9 @@
 # Lunaria Pathing System
 Lunaria Pathing System (LPS) is used to create paths for Radiance Macro.
-Only supports keyboard at this point.
+Supports both keyboard and mouse
 
 # Requirements:
-- Python
+- Python (3.9 is what I'm using)
 - pynput
 - ahk
 - pathlib
@@ -11,11 +11,10 @@ Only supports keyboard at this point.
 
 # Instructions:
 - Run record_path.py to record a path
-- F5 aligns camera (no reset)
+- F3 aligns camera (no reset)
 - Press F1 to start recording
 - Press F2 to stop recording
-- Paste path in test_path.py
-- Run test_path.py to test your path
+- Run path.py to test your path
 - Remember to clear paths.py every time you record
 
 # Radiant Team
@@ -27,7 +26,6 @@ Only supports keyboard at this point.
 - TheEndyy (Roll detection)
 - Niko (Pathing)
 - bored man
-- Allan (Pathing, Pathing Development)
 
 ### Graphical Designer
 - Cate
