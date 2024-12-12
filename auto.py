@@ -36,12 +36,12 @@ ahk.start_hotkeys()
 
 def align_camera():
     focus_roblox()
-    click_menu_button(2)
-    sleep(0.1)
+    # click_menu_button(2)
+    # sleep(0.1)
     r_pos = get_roblox_window_pos()
-    ahk.mouse_move(381 * (r_pos.width/1920.0), 143 * (r_pos.height/1080.0))
+    # ahk.mouse_move(381 * (r_pos.width/1920.0), 143 * (r_pos.height/1080.0))
     
-    ahk.click()
+    # ahk.click()
     sleep(0.1)
     ahk.mouse_drag(button="R", from_position=[r_pos.x + r_pos.width*0.2, r_pos.y + 44 + r_pos.height*0.05], x=r_pos.x + r_pos.width*0.2, y=r_pos.y + 400 + r_pos.height*0.05, send_mode="Input", speed=1)
     sleep(0.1)

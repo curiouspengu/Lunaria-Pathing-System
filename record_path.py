@@ -28,7 +28,6 @@ class Path():
         self.actions = []
         self.keys_pressed = {}
 
-        self.mouse_controller = mouse.Controller()
         self.keyboard_controller = keyboard.Controller()
     
     def start_recording(self):
@@ -39,8 +38,7 @@ class Path():
 
         self.actions.append("\n\n# New Recording\n")
 
-        with mouse.Listener(on_click=self.on_click) as mouse_listener, \
-            keyboard.Listener(on_press=self.on_press, on_release=self.on_release) as keyboard_listener:
+        with keyboard.Listener(on_press=self.on_press, on_release=self.on_release) as keyboard_listener:
             
             while not self.stop_recording_flag: time.sleep(0.1)
             keyboard_listener.stop()
