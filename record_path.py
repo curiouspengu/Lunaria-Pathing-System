@@ -27,6 +27,7 @@ class Path():
 
         self.actions = []
         self.keys_pressed = {}
+        self.no_keys_pressed = False
 
         self.keyboard_controller = keyboard.Controller()
     
@@ -47,6 +48,7 @@ class Path():
         self.save_recording()
 
     def on_press(self, key):
+        self.check_keys_pressed()
         if key in self.keys_pressed.keys():
             if self.keys_pressed[key] == True:
                 return
@@ -58,6 +60,7 @@ class Path():
         self.record_keyboard(key, True)
 
     def on_release(self, key):
+        self.check_keys_pressed()
         if key in self.keys_pressed.keys():
             if self.keys_pressed[key] == False:
                 return
@@ -67,14 +70,11 @@ class Path():
         self.keys_pressed[key] = False
         self.record_keyboard(key, False)
     
-    def check_keys_pressed(self, key):
+    def check_keys_pressed(self):
         for key_status in self.keys_pressed:
-            if key_status == key:
-                if self.keys_pressed[key_status] == False:
-                    return False
             if self.keys_pressed[key_status] == True:
-                return False
-        return True
+                self.no_keys_pressed = False
+        self.no_keys_pressed = True
 
     def record_keyboard(self, key, pressed):
         if not self.stop_recording_flag:
@@ -89,7 +89,8 @@ class Path():
             self.last_action = time.time()
             key = f'\"{key}\"' if "Key" not in key else key
 
-            if self.check_keys_pressed(key) == True:
+            if self.no_keys_pressed == True:
+                self.no_keys_pressed = False
                 self.actions.append(f"walk_sleep(0.1)\nwalk_send({key}, {pressed})\n")
             else:
                 self.actions.append(f"walk_sleep({timestamp})\nwalk_send({key}, {pressed})\n")
