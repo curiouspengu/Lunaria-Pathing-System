@@ -48,11 +48,10 @@ class Path():
         self.save_recording()
 
     def on_press(self, key):
-        self.check_keys_pressed()
         if key in self.keys_pressed.keys():
             if self.keys_pressed[key] == True:
                 return
-        
+        self.check_keys_pressed()
         self.keys_pressed[key] = True
 
         if key == keyboard.Key.f2:
@@ -60,7 +59,6 @@ class Path():
         self.record_keyboard(key, True)
 
     def on_release(self, key):
-        self.check_keys_pressed()
         if key in self.keys_pressed.keys():
             if self.keys_pressed[key] == False:
                 return
@@ -71,9 +69,11 @@ class Path():
         self.record_keyboard(key, False)
     
     def check_keys_pressed(self):
+        print(self.keys_pressed)
         for key_status in self.keys_pressed:
             if self.keys_pressed[key_status] == True:
                 self.no_keys_pressed = False
+                return
         self.no_keys_pressed = True
 
     def record_keyboard(self, key, pressed):
