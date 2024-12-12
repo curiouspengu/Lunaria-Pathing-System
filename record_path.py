@@ -74,18 +74,19 @@ class Path():
             if not self.last_action:
                 self.last_action = self.start_time
             
+            no_keys_pressed = False
             for key_status in self.keys_pressed:
                 if key_status == key:
                     continue
                 if self.keys_pressed[key_status] == False:
-                    self.no_keys_pressed = True
+                    no_keys_pressed = True
             
             key = self.convert_key_layout(str(key).replace("'", ""))
             timestamp = time.time() - self.last_action
             self.last_action = time.time()
             key = f'\"{key}\"' if "Key" not in key else key
 
-            if self.no_keys_pressed == True:
+            if no_keys_pressed == True:
                 self.actions.append(f"walk_sleep(0.1)\nwalk_send({key}, {pressed})\n")
             else:
                 self.actions.append(f"walk_sleep({timestamp})\nwalk_send({key}, {pressed})\n")
