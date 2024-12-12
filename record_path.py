@@ -44,7 +44,6 @@ class Path():
             keyboard_listener.stop()
         
         self.recording = False
-        self.actions[1] == ""
         self.save_recording()
 
     def on_press(self, key):
