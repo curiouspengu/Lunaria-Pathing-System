@@ -76,9 +76,9 @@ class Path():
                 self.last_action = self.start_time
             
             for key_status in self.keys_pressed:
-                if key_status.first == key:
+                if key_status == key:
                     continue
-                if key_status.second == False:
+                if self.keys_pressed[key_status] == False:
                     no_keys_pressed = True
             
             key = self.convert_key_layout(str(key).replace("'", ""))
