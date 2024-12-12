@@ -35,9 +35,9 @@ ahk.add_hotkey("F1", exit_program)
 ahk.start_hotkeys()
 
 def align_camera():
-    r_pos = window.get_roblox_window_pos()
+    r_pos = get_roblox_window_pos()
 
-    pathlib.reset()
+    reset()
     sleep(0.1)
     click_menu_button(2)
     sleep(0.1)
@@ -56,6 +56,12 @@ def align_camera():
         sleep(0.01)
     kc.tap("\\")
 
+def reset():
+    kc.tap(Key.esc)
+    sleep(0.1)
+    kc.tap("r")
+    sleep(0.1)
+    kc.tap(Key.enter)
 
 def click_menu_button(button_num):
     # rel_pos = window.get_roblox_window_pos()
@@ -96,6 +102,14 @@ def focus_roblox():
         return -1
     win32gui.ShowWindow(roblox_hwnd, 5)
     win32gui.SetForegroundWindow(roblox_hwnd)
+
+class Position():
+    def __init__(self):
+        super().__init__()
+        self.x = 0
+        self.y = 0
+        self.width = 0
+        self.height = 0
 
 def get_roblox_window_pos():
     position = ahk.win_get_position(title=win32gui.GetWindowText(get_roblox_HWND()))
