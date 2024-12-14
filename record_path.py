@@ -24,6 +24,7 @@ class Path():
 
         self.stop_recording_flag = False
         self.stop_replay_flag = False
+        self.save = True
 
         self.actions = []
         self.keys_pressed = {}
@@ -45,7 +46,10 @@ class Path():
             keyboard_listener.stop()
         
         self.recording = False
-        self.save_recording()
+        if self.save == True:
+            self.save_recording()
+        else:
+            self.save = True
 
     def on_press(self, key):
         if key in self.keys_pressed.keys():
@@ -90,7 +94,7 @@ class Path():
 
             if self.no_keys_pressed == True:
                 self.no_keys_pressed = False
-                self.actions.append(f"walk_sleep(0.01)\nwalk_send({key}, {pressed})\n")
+                self.actions.append(f"walk_sleep(0.1)\nwalk_send({key}, {pressed})\n")
             else:
                 self.actions.append(f"walk_sleep({timestamp})\nwalk_send({key}, {pressed})\n")
     
@@ -112,9 +116,14 @@ class Path():
     
     def stop_recording(self):
         self.stop_recording_flag = True
+        print("Stopped Recording")
+    
+    def disable_save(self):
+        self.save = False
+        self.stop_recording()
 
 def main():
-    print("F1 Start Recording | F2 Stop Recording | F3 Align Roblox Character | Ctrl C exit this window")
+    print("F1 Start Recording | F2 Stop Recording | F3 Stop but don't save | F4 Align Roblox Character  | Ctrl C exit this window")
     print("Run path.py to test | F1 Exit Path")
     record_path = Path()
     def on_record_hotkey():
@@ -124,7 +133,8 @@ def main():
     with keyboard.GlobalHotKeys({
         '<F1>': on_record_hotkey,
         '<F2>': record_path.stop_recording,
-        '<F3>': align_camera,
+        '<F3>': record_path.disable_save,
+        '<F4>': align_camera,
         '<ctrl>+c': exit
     }) as h:
         h.join()
